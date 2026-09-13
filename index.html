@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile - My Website</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="header-left">
+            <h1>Virtual Assistant & Customer Service Support You Can Rely On</h1>
+        </div>
+        <div class="divider"></div>
+        <div class="header-right">
+            <p>Mobile/Whatsapp: +63948-562-7623
+            <br>Email: Dwynemarcusnunez@gmail.com</p>
+        </div>
+    </header>
+
+    <!-- Transparent Menu -->
+    <nav>
+        <ul>
+            <li><a href="index.html">Profile</a></li>
+            <li><a href="service.html">Service</a></li>
+            <li><a href="tools.html">Tools</a></li>
+        </ul>
+    </nav>
+
+    <!-- Profile Content -->
+<main>
+   <div class="profile-section">
+    <!-- LEFT: Picture + Skills -->
+    <div class="profile-left">
+        <img src="formalpic.jpg" alt="My Profile Picture" class="profile-pic">
+
+        <div class="skills">
+            <h3>Skills</h3>
+            <div class="skills-grid">
+                <ul>
+                    <li>Email Management</li>
+                    <li>Customer Service</li>
+                    <li>Lead Sourcing</li>
+                    <li>Ad Creation</li>
+                </ul>
+                <ul>
+                    <li>Computer Repair</li>
+                    <li>Time Management</li>
+                    <li>Problem Solving</li>
+                    <li>Data Entry</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- RIGHT: Service text -->
+    <div class="profile-right">
+      <div class="profile-textbox top-box">
+        <p>
+            Reliable assistance you can count on.  
+            I’ll manage the tasks, so you can focus on success.
+        </p>
+      </div>
+
+      <!-- Testimonials + Feedback side by side -->
+      <div class="testimonials-section">
+        <!-- LEFT COLUMN: Testimonials -->
+        <div class="testimonials">
+          <h3>Testimonials</h3>
+          <div id="testimonial-box">
+              <p>"Marcus is very reliable and efficient. He helped us manage our emails and customer inquiries seamlessly."</p>
+              <span>- Client from U.S. Service Provider</span>
+              <div class="stars">★★★★★</div>
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN: Rating + Feedback -->
+        <div class="feedback-form">
+          <div class="rating">
+              <span data-value="1">★</span>
+              <span data-value="2">★</span>
+              <span data-value="3">★</span>
+              <span data-value="4">★</span>
+              <span data-value="5">★</span>
+          </div>
+          <p id="rating-result"></p>
+
+          <textarea id="feedback-text" placeholder="Write your feedback here..." rows="3" cols="40"></textarea>
+          <br>
+          <button id="submit-rating">Submit Rating & Feedback</button>
+        </div>
+      </div>
+    </div>
+   </div>
+</main>
+
+<script>
+const testimonials = [
+    {
+        text: '"Ramon is very reliable and efficient. He helped us manage our emails and customer inquiries seamlessly."',
+        client: "- Client from U.S. Service Provider",
+        stars: "★★★★★"
+    },
+    {
+        text: '"Professional and detail-oriented. His lead sourcing and ad creation boosted our campaign results."',
+        client: "- Digital Marketing Agency",
+        stars: "★★★★☆"
+    },
+    {
+        text: '"Great technical support! He fixed our PC issues quickly and explained everything clearly."',
+        client: "- Local Business Owner",
+        stars: "★★★★★"
+    }
+];
+
+let index = 0;
+function showTestimonial() {
+    const box = document.getElementById("testimonial-box");
+    box.innerHTML = `
+        <p>${testimonials[index].text}</p>
+        <span>${testimonials[index].client}</span>
+        <div class="stars">${testimonials[index].stars}</div>
+    `;
+    index = (index + 1) % testimonials.length;
+}
+setInterval(showTestimonial, 3000);
+
+// Rating system
+let selectedRating = null;
+const stars = document.querySelectorAll(".rating span");
+const result = document.getElementById("rating-result");
+
+stars.forEach(star => {
+    star.addEventListener("click", () => {
+        selectedRating = star.getAttribute("data-value");
+        result.textContent = `You selected ${selectedRating} star(s)!`;
+        stars.forEach(s => s.style.color = "#ccc");
+        for (let i = 0; i < selectedRating; i++) {
+            stars[i].style.color = "#ff9800";
+        }
+    });
+});
+
+// Submit rating + feedback
+document.getElementById("submit-rating").addEventListener("click", () => {
+    const feedback = document.getElementById("feedback-text").value;
+    if (!selectedRating) {
+        alert("Please select a rating first!");
+        return;
+    }
+    if (!feedback.trim()) {
+        alert("Please enter your feedback!");
+        return;
+    }
+
+    // Add new testimonial locally
+    testimonials.push({
+        text: `"${feedback}"`,
+        client: "- Anonymous User",
+        stars: "★".repeat(selectedRating)
+    });
+
+    alert("🎉 Thank you! Your rating and feedback were submitted successfully.");
+    document.getElementById("feedback-text").value = "";
+    result.textContent = `You rated ${selectedRating} star(s)! ✔`;
+});
+</script>
+
+</body>
+</html>
